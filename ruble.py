@@ -29,9 +29,11 @@ def cur_all():
         n += 1
 
 def send_message(message):
+    """Выводит сообщение в терминал"""
     os.system('echo "{}"'.format(message))
 
 def main(currency='USD'):
+    """ Проверяет наличие аргументов"""
     if len(sys.argv) > 1:
         if sys.argv[1] == 'all':
             cur_all()
