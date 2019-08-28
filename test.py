@@ -21,7 +21,12 @@ class TestRuble(unittest.TestCase):
         messge = 'Не корректная абривеатура валюты. Для вывода всех возможных воспользуйтесь all'
         self.assertEqual(invalid_arg.run(), GetRates().send_message(messge))
 
-        
+    def test_register(self):
+        "Проверяет что бы любой регистр аргумента работал нормально"
+        all = GetRates('all')
+        for arg in ['All', 'all', 'ALL', 'alL', 'aLL']:
+            self.assertEqual(GetRates(arg).run(), all.run())
+
 
 
 unittest.main()
