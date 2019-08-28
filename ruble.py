@@ -5,7 +5,10 @@ import re
 import os
 import sys
 
-class GetRate():
+class GetRates():
+    def __init__(self, currency='USD'):
+        self.currency = currency
+
     def get_html(self):
         url = 'https://www.cbr.ru/currency_base/daily/'
         r = requests.get(url)
@@ -32,26 +35,26 @@ class GetRate():
         """Выводит сообщение в терминал"""
         os.system('echo "{}"'.format(message))
 
-    def run(self, currency='USD'):
+    def run(self):
         """ Запускает скрипт, предварительно проверив наличие аргументов"""
         if len(sys.argv) > 1:
-            if sys.argv[1] == 'all':
+            if sys.argv[1].upper() == 'ALL':
                 return self.cur_all()
-            currency = sys.argv[1]
+            self.currency = sys.argv[1]
 
-        """if currency == 'all':
-            self.cur_all()"""
+        """if self.currency.upper() == 'ALL':
+            return self.cur_all()"""
 
         try:
-            rate = self.get_rate(currency)
+            rate = self.get_rate(self.currency)
             self.send_message(rate)
         except AttributeError:
             #перехватывает исключение не корректного атрибута.
-            rate = ('Не корректная абривеатура валюты. Для вывода всех возможных воспользуйтесь "all" ')
-            self.send_message(rate)
+            messge = ('Не корректная абривеатура валюты. Для вывода всех возможных воспользуйтесь "all" ')
+            self.send_message(messge)
 
 
 
 if __name__ == '__main__':
-    main = GetRate()
+    main = GetRates()
     main.run()
