@@ -28,7 +28,6 @@ class TestRuble(unittest.TestCase):
             self.assertEqual(GetRates(arg).run(), all.run())
 
 
-
 url = 'https://www.cbr.ru/currency_base/daily/'
 r = requests.get(url)
 if r.status_code == 200:
