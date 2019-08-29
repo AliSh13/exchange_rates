@@ -1,25 +1,25 @@
 import unittest
 import os
 import sys
+import requests
 from ruble import GetRates
 
 
 
 class TestRuble(unittest.TestCase):
     """Проверяет работу скрипта"""
-    """def setUp(self):
-        self.ruble = GetRate()"""
+    def setUp(self):
+        self.ruble = GetRates()
 
     def test_default_arg(self):
         "Проверяет, что по умолчанию выводится курс USD"
-        usd = GetRates()
-        self.assertEqual(usd.run(), GetRates('USD').run())
+        self.assertEqual(self.ruble.run(), GetRates('USD').run())
 
     def test_of_invalid_arg(self):
         "Проверяет правильность вывода при некорректном аргументе"
         invalid_arg = GetRates('any arg')
         messge = 'Не корректная абривеатура валюты. Для вывода всех возможных воспользуйтесь all'
-        self.assertEqual(invalid_arg.run(), GetRates().send_message(messge))
+        self.assertEqual(invalid_arg.run(), self.ruble.send_message(messge))
 
     def test_register(self):
         "Проверяет что бы любой регистр аргумента работал нормально"
@@ -29,4 +29,8 @@ class TestRuble(unittest.TestCase):
 
 
 
-unittest.main()
+url = 'https://www.cbr.ru/currency_base/daily/'
+r = requests.get(url)
+if r.status_code == 200:
+    '''Перед проверкой обеждаемся что есть подключение'''
+    unittest.main()
